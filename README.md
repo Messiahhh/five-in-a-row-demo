@@ -9,7 +9,7 @@ TODO
 
 
 
-###Ajax封装
+### Ajax封装
 ```
 $npm install
 $node app.js

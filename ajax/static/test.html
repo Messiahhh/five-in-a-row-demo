@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src='./front.js'></script>
+</head>
+<body>
+
+    <p>提交表单</p>
+    <input type="text" class='usr' placeholder="username">
+    <input type='text' class='psd' placeholder="password"> 
+    <button class='button'>submit</button>
+    <p>提交json数据</p>
+    <input type="text" class='a' placeholder="username">
+    <input type='text' class='b' placeholder="password"> 
+    <button class='button2'>submit</button>
+    <script>
+        let usr = $('.usr')
+            psd = $('.psd')
+
+            a = $('.a')
+            b = $('.b');
+
+        let button = $('.button')
+        let button2 = $('.button2')
+        
+        //表单提交
+        button.addEventListener('click', function () {
+            let username = usr.value
+                password = psd.value;
+            
+            
+            let data = `username=${username}&password=${password}`
+            
+            Ajax.post('/upload', data).then((data) => {
+                console.log(data)
+            })
+        })
+
+        button2.addEventListener('click', function () {
+            let aVal = a.value
+            let bVal = b.value
+            let data = {
+                a: aVal,
+                b: bVal
+            }
+            
+            
+            // Ajax({
+            //     method: 'post',
+            //     url: '/upload',
+            //     data: data
+            // }).then((data) => {
+            //     console.log(data)
+            // })
+            Ajax.post('/upload', data).then((data) => {
+                console.log(data)
+            })
+        })
+    </script>
+</body>
+</html>

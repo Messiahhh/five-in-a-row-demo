@@ -17,12 +17,7 @@ app.use(express.static(path.join(__dirname, 'static')))
 app.use(express.static(path.join(__dirname, 'lib')))
 
 app.get('/', (req, res) => {
-    fs.readFile('./static/test.html', (err, data) => {
-        res.writeHead(200, {
-            'Content-Type': 'text/html',
-        })
-        res.end(data)
-    })
+    res.sendfile('./static/test.html')
 })
 
 app.post('/upload', (req, res) => {
@@ -31,7 +26,6 @@ app.post('/upload', (req, res) => {
         status: 200
     })
 })
-
 
 
 app.listen(3000, () => {

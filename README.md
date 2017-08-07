@@ -1,6 +1,8 @@
 ## 暑假作业
 
-注：若无特殊说明，代码默认监听3000端口
+注：若无特殊说明，代码默认监听3000端口。
+
+​	若无特殊说明，先根据package.json安装模块
 
 
 
@@ -15,17 +17,23 @@ TODO
 ### Web worker
 
 ```
-$npm install
 $node app.js
 ```
-
-
 
 
 
 ### Ajax封装（代码在./lib/front.js）
 
 ```
-$npm install
 $node app.js
 ```
+
+
+### Gulp
+
+先随便写点
+
+```
+$gulp
+```
+

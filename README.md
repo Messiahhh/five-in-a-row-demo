@@ -31,7 +31,6 @@ $node app.js
 
 ### Gulp
 
-先随便写点
 
 ```
 $gulp

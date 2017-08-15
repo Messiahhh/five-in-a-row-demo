@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+    body {
+        margin: 0;
+    }
+
+    .hello {
+        width: 500px;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        margin: 0 auto;
+        font-size: 24px;
+        letter-spacing: 5px;
+    }
+
+    .chatroom {
+        width: 1600px;
+        height: 800px;
+        background: pink;
+        margin: 0 auto;
+    }
+
+    .talk {
+        width: 1600px;
+        height: 90px;
+        background: skyblue;
+        margin: 0 auto;
+    }
+
+    .input {
+        display: block;
+        width: 1400px;
+        height: 100%;
+        padding-left: 20px;
+        outline: none;
+        border: none;
+        background: none;
+        font-size: 40px;
+        color: #fff;
+        float: left;
+    }
+
+    ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+        color:#89a;
+    }
+
+    .send {
+        float: left;
+        width: 180px;
+        height: 100%;
+        background: #CC6D6E;
+        outline: none;
+        border: none;
+        font-size: 24px;
+    }
+
+
+
+    .bar {
+        width: 100%;
+        height: 100px;
+        /* background: skyblue; */
+        position: relative;
+    }
+
+    .bar .nameL {
+        min-width: 50px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        position: absolute;
+        top: 5px;
+        left: 30px;
+        font-size: 22px;
+        color: #555;
+    } 
+    .bar .contentL {
+        min-width: 200px;
+        height: 50px;
+        position: absolute;
+        font-size: 18px;
+        top: 50px;
+        left: 80px;
+    }
+
+    .bar .nameR {
+        min-width: 50px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        position: absolute;
+        top: 5px;
+        right: 50px;
+        font-size: 22px;
+        color: #555;
+    } 
+    .bar .contentR {
+        min-width: 200px;
+        height: 50px;
+        position: absolute;
+        font-size: 18px;
+        top: 50px;
+        right: 80px;
+    }
+
+    .bar:nth-child(odd) {
+        background: skyblue;
+    }
+    </style>
+</head>
+<body>
+    <div class='hello'>你好, <%- username%>, welcome to Eden</div>
+    <div class="chatroom">
+        
+    </div>
+
+    <div class="talk">
+        <input type="text" class='input' placeholder="随便聊点什么把！">
+        <button type="button" class='send'>发送</button>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.slim.js'></script>
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <script src='./js/js-cookie.js'></script>
+    <script>
+        $(function () {
+            let socket = io()
+            let $send = $('.send')
+            let $input = $('.input')
+            let $chatroom = $('.chatroom')
+
+            let usr = Cookies.get('usr')
+            $send.click(function () {
+                let val = $input.val()
+                $input.val('')
+                socket.emit('say', {
+                    usr,
+                    msg: val
+                })
+                $chatroom.append(`<div class="bar">
+                    <div class="nameR">${usr}</div>
+                    <div class="contentR">${val}</div>
+                </div>`)
+            })
+            
+
+            socket.on('say', function (data) {
+                console.log(`${data.usr} says ${data.msg}`)
+                $chatroom.append(`<div class="bar">
+                    <div class="nameL">${data.usr}</div>
+                    <div class="contentL">${data.msg}</div>
+                </div>`)
+            })
+        })
+    </script>
+</body>
+</html>

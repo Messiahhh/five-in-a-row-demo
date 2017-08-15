@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <script src='./js/sweetalert.min.js'></script>
+    <script src='./js/lib.js'></script>
+    <link rel="stylesheet" href="./css/sweetalert.css">
+</head>
+<body>
+   <div class="index">
+        <div class="logo"></div>
+        <div class="board">
+            <div class="reg">
+                <input type="text" class='regField' placeholder='请输入用户名'>
+                <input type="password" class="regVal" placeholder="请输入密码">
+                <button type="button" class='blue-button reg-button'>注册</button>
+            </div>
+            <div class="login">
+                <input type="text" class='loginField' placeholder='请输入用户名'>
+                <input type="password" class="loginVal" placeholder="请输入密码">
+                <button type="button" class='blue-button login-button'>登陆</button>
+            </div>
+            <button type="button" class='change blue-button'>切换注册/登陆</button>
+
+        </div>
+   </div>
+   <script >
+        $(function () {
+            //开场动画
+            let $board = $('.board')
+            $board.show('slow')
+            //切换登陆注册
+            let $change = $('.change')
+            $change.click(function () {
+                $('.reg').toggle('slow')
+                $('.login').toggle('slow')
+            })
+
+            //注册
+            let $reg = $('.reg-button')
+            let $regField = $('.regField')
+            let $regVal = $('.regVal')
+            $reg.click(function () {
+                let usr = $regField.val()
+                let psd = $regVal.val()
+                $regField.val('')
+                $regVal.val('')
+                Ajax.post('/reg', `usr=${usr}&psd=${psd}`)
+                .then((data) => {
+                    let type = data.status === 200 ? 'success' : 'error'
+                    swal({
+                        title: data.info,
+                        type
+                    })
+                })
+            })
+
+            //登陆
+            let $login = $('.login-button')
+            let $loginField = $('.loginField')
+            let $loginVal = $('.loginVal')
+            $login.click(function () {
+                let usr = $loginField.val()
+                let psd = $loginVal.val()
+                $loginField.val('')
+                $loginVal.val('')
+                Ajax.post('/login', `usr=${usr}&psd=${psd}`)
+                .then((data) => {
+                    let type = data.status === 200 ? 'success' : 'error'
+                    console.log(type)
+                    if (type === 'success') {
+                        swal({
+                            title: data.info,
+                            type
+                        }, function () {
+                            location.href = '/chat'
+                        })
+                    }
+
+                    else {
+                        console.log('fail')
+                        swal({
+                            title: data.info,
+                            type
+                        })
+                    }
+                    
+                })
+
+            })
+            
+        })
+
+   </script>
+</body>
+</html>

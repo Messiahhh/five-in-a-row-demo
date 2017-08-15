@@ -1,0 +1,261 @@
+@keyframes gradient {
+    from {
+        background: linear-gradient(to bottom, pink, #871A98)
+    }
+
+    5% {
+        background: linear-gradient(to right, #46ABB1, #76C13E)
+    }
+
+    10% {
+        background: linear-gradient(to bottom, #F8748B, #30080F)
+    }
+
+    15% {
+        background: linear-gradient(to right, #8C2B74, #7713C1)
+    }
+
+    20% {
+        background: linear-gradient(to bottom, #09ABAE, #5CBE4C)
+    }
+
+    25% {
+        background: linear-gradient(to left, #300F73, #D14D5A)
+    }
+
+    30% {
+        background: linear-gradient(to bottom, #5F1795, #157A8D)
+    }
+
+    35% {
+        background: linear-gradient(to left, #4F1829, #109BA9)
+    }
+
+    40% {
+        background: linear-gradient(to bottom, #C54EC6, #0FDFE1)
+    }
+
+    45% {
+        background: linear-gradient(to left, #02D2D7, #04B341)
+    }
+
+    50% {
+        background: linear-gradient(to bottom, #1EAE52, #A043A6)
+    }
+
+    55% {
+        background: linear-gradient(to right, #B9521F, #CB3F75)
+    }
+
+    60% {
+        background: linear-gradient(to bottom, #603BBF, #BB3C3E)
+    }
+
+    65% {
+        background: linear-gradient(to left, #82B250, #D45A4F)
+    }
+
+    70% {
+        background: linear-gradient(to bottom, #69C14A, #B63A3A)
+    }
+
+    75% {
+        background: linear-gradient(to right, #CC6D6E, #35A6D7)
+    }
+
+    80% {
+        background: linear-gradient(to bottom, #39B05D, #296FC3)
+    }
+
+    85% {
+        background: linear-gradient(to left, #633AC5, #79D747)
+    }
+
+    90% {
+        background: linear-gradient(to bottom, #5D0405, #C70BC9)
+    }
+
+    95% {
+        background: linear-gradient(to right, #18B1C2, #AAB34D)
+    }
+
+    to {
+        background: linear-gradient(to bottom, #B880D9, #B75759)
+    }
+}
+
+
+button {
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:#08090B;
+}
+
+.blue-button {
+    background: #0f88eb;
+    border: 1px solid #0f88eb;
+    border-radius: 3px;
+    color: #fff;
+    outline: none;
+    padding: 5px 10px;
+}
+
+.blue-button:hover {
+    background-color: #0d79d1;
+}
+
+
+
+
+
+.index {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    animation: gradient 120s infinite;
+    animation-direction: alternate;
+    opacity: 0.4;
+    /* filter: blur(10px); */
+    z-index: 999;
+}
+
+
+.logo {
+    position: absolute;
+    z-index: 9999;
+    top: 20px;
+    left: 30px;
+    width: 600px;
+    height: 180px;
+    background: url(../images/logo.png)
+}
+
+
+.board {
+    height: 100%;
+    width: 600px;
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    right: 200px;
+    display: none;
+}
+
+.reg {
+    width: 100%;
+    height: 200px;
+    margin-top: 100px;
+    position: relative;
+}
+
+.reg .regField {
+    display: block;
+    width: 250px;
+    height: 30px;
+    padding: 10px 15px;
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -125px;
+    outline: none;
+    border: none;
+    background: #62D2C3;
+}
+
+.reg .regVal {
+    display: block;
+    width: 250px;
+    height: 30px;
+    padding: 10px 15px;
+    font-size: 20px;
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    margin-left: -125px;
+    outline: none;
+    border: none;
+    background: #F9B9C5;
+}
+
+
+.reg .reg-button {
+    width: 280px;
+    height: 40px;
+    position: absolute;
+    top: 160px;
+    left: 50%;
+    margin-left: -125px;
+}
+
+.login {
+    width: 100%;
+    height: 200px;
+    margin-top: 100px;
+    position: relative;
+    display: none;
+    
+}
+
+.login .loginField {
+    display: block;
+    width: 250px;
+    height: 30px;
+    padding: 10px 15px;
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -125px;
+    outline: none;
+    border: none;
+    background: #6AC0B4;
+}
+
+.login .loginVal {
+    display: block;
+    width: 250px;
+    height: 30px;
+    padding: 10px 15px;
+    font-size: 20px;
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    margin-left: -125px;
+    outline: none;
+    border: none;
+    background: #F9B9C5;
+}
+
+
+.login .login-button {
+    width: 280px;
+    height: 40px;
+    position: absolute;
+    top: 160px;
+    left: 50%;
+    margin-left: -125px;
+}
+
+
+.change {
+    width: 280px;
+    height: 40px;
+    position: absolute;
+    left: 50%;
+    margin-left: -125px;
+    top: 330px;
+}

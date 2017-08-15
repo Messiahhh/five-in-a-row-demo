@@ -1,0 +1,21 @@
+{
+  "name": "eden",
+  "version": "1.0.0",
+  "description": "The Garden of Eden",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Messiah",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.7",
+    "express": "^4.15.4",
+    "morgan": "^1.8.2",
+    "mysql": "^2.14.1",
+    "redis": "^2.8.0",
+    "socket.io": "^2.0.3"
+  }
+}

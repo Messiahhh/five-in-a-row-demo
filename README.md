@@ -73,3 +73,23 @@ $node app.js
 - [ ] 加强进度条
 - [ ] 换成formData
 - [ ] 前端的图片剪切
+
+## Websocket聊天室（06
+
+基于Mysql储存用户信息和Redis储存session，使用socket.io库
+
+Mysql配置与05作业一致，Redis无需配置。
+
+```
+$node app.js
+```
+
+
+
+TODO：
+
+- [ ] 聊天显示头像，修改头像
+
+- [ ] 加强逻辑，更多功能
+
+      ​

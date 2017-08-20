@@ -98,7 +98,7 @@ TODO：
 
 基于canvas。更改index.js下的config对象来调整参数
 
-```json
+```js
 //配置文件
 let config = {
     //值越小，基础半径越大
@@ -112,6 +112,5 @@ let config = {
     //间隔时间，毫秒
     interval: 30
 }
-
 ```
 

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <canvas class='canvas'></canvas>
+    <script>
+        //随机产生颜色
+        function rColor () {
+            let colorList = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
+            let char1 = colorList[Math.floor(Math.random() * 17)]
+            let char2 = colorList[Math.floor(Math.random() * 17)]
+            let char3 = colorList[Math.floor(Math.random() * 17)]
+            let char4 = colorList[Math.floor(Math.random() * 17)]
+            let char5 = colorList[Math.floor(Math.random() * 17)]
+            let char6 = colorList[Math.floor(Math.random() * 17)]
+            return `#${char1}${char2}${char3}${char4}${char5}${char6}`
+        }
+
+        // canvas宽高自适应Viewport
+        function changeWidth () {
+            canvas.width = window.innerWidth
+            canvas.height = window.innerHeight
+        }
+        
+        let canvas = document.querySelector('.canvas')
+        let ctx = canvas.getContext('2d')
+        
+        changeWidth()
+        window.addEventListener('resize', changeWidth)
+
+        //配置文件
+        let config = {
+            //值越小，基础半径越大
+            baseRadiusRatio: 40,
+            //值越小，额外半径越大
+            extraRadiusRatio: 40,
+            //小球速度为半径与speedRatio的比值，这个值越小，速度越大
+            speedRatio: 20.0,
+            //小球数量
+            circleNum: 20,
+            //间隔时间，毫秒
+            interval: 30
+        }
+
+
+        //小球，封装成一个类
+        function Circle() {
+            this.radius = Math.random() * canvas.width / config.baseRadiusRatio + canvas.width / config.extraRadiusRatio
+            this.color = rColor()
+            this.x = this.radius + Math.random() * ( canvas.width - this.radius * 2 )
+            this.y = this.radius + Math.random() * ( canvas.height - this.radius * 2 )
+            let directX = Math.floor(Math.random() * 2)
+            if (directX) {
+                this.speedX = this.radius / config.speedRatio
+            }
+            else {
+                this.speedX = -this.radius / config.speedRatio
+            }
+
+            let directY = Math.floor(Math.random() * 2)
+            if (directY) {
+                this.speedY = this.radius / config.speedRatio
+            }
+            else {
+                this.speedY = -this.radius / config.speedRatio
+            }
+            
+        }
+        Circle.prototype.move = function() {
+            if(this.speedX >= 0) {
+                if (this.x + this.speedX >= canvas.width - this.radius) {
+                    this.color = rColor()
+                    this.speedX = -this.speedX
+                }
+                this.x += this.speedX
+            }
+
+            if(this.speedX <= 0) {
+                if (this.x + this.speedX <= this.radius) {
+                    this.speedX = -this.speedX
+                    this.color = rColor()
+                }
+                this.x += this.speedX
+            }
+
+            if(this.speedY >= 0) {
+                if (this.y + this.speedY >= canvas.height - this.radius) {
+                    console.log('1')
+                    this.speedY = -this.speedY
+                    this.color = rColor()
+                }
+                this.y += this.speedY
+            }
+
+            if(this.speedY <= 0) {
+                if (this.y + this.speedY <= this.radius) {
+                    this.speedY = -this.speedY
+                    this.color = rColor()
+                }
+                this.y += this.speedY
+            }
+        }
+
+        
+
+        let obj = {length: config.circleNum}
+        //小球信息保存在circleList内
+        let circleList = Array.from(obj)
+        circleList.forEach((item, index) => {
+            circleList[index] = new Circle()
+        })
+
+
+        //画布
+        function draw() {
+            circleList.forEach((item, index) => {
+                ctx.beginPath()
+                ctx.arc(item.x, item.y, item.radius, 0, Math.PI * 2, true);
+                ctx.stroke()
+                
+                ctx.strokeStyle = 'black'
+                ctx.fillStyle = item.color
+                ctx.fill()
+            })
+        }
+        draw()
+        //定时重绘
+        setInterval(function () {
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            circleList.forEach((item, index) => {
+                circleList[index].move()
+            })
+            draw()
+        }, config.interval)
+        
+    </script>
+</body>
+</html>

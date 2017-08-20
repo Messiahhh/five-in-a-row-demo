@@ -93,3 +93,25 @@ TODO：
 - [ ] 加强逻辑，更多功能
 
       ​
+
+### 炫彩弹球（08
+
+基于canvas。更改index.js下的config对象来调整参数
+
+```json
+//配置文件
+let config = {
+    //值越小，基础半径越大
+    baseRadiusRatio: 40,
+    //值越小，额外半径越大
+    extraRadiusRatio: 40,
+    //小球速度为半径与speedRatio的比值，这个值越小，速度越大
+    speedRatio: 20.0,
+    //小球数量
+    circleNum: 20,
+    //间隔时间，毫秒
+    interval: 30
+}
+
+```
+

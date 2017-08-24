@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .chess {
+            display: block;
+            margin: 80px auto;
+            box-shadow: 2px 2px 5px  #789;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="chess" width='800' height='800'></canvas>
+    <script>      
+        function __main() {
+
+            let canvas = document.querySelector('.chess')
+            let ctx = canvas.getContext('2d')
+            //flag为true是黑棋，反之为白棋
+            let flag = true
+            //是否取胜
+            let winFlag = false
+            //二维数组保存状态
+            let arr = multArr()
+
+
+            //背景
+            function drawLine () {
+                //间隔
+                let [interval, offset, lineNum, lineColor] = [50, 60, 15, '#bfbfbf']
+                let lineNum_1 = lineNum - 1
+                ctx.strokeStyle = lineColor
+                for (let i = 0; i < lineNum; i++) {
+                    let i_interval = i * interval
+                    ctx.moveTo(offset, offset + i_interval)
+                    ctx.lineTo(offset + lineNum_1 * interval, offset + i_interval)
+                    ctx.stroke()
+                    ctx.moveTo(offset + i_interval, offset)
+                    ctx.lineTo(offset + i_interval, offset + lineNum_1 * interval)
+                    ctx.stroke()
+                }
+            }
+
+            //二维数组对应棋子的状态，包括是否落子，落子的颜色
+            function multArr() {
+                let num = 15
+                let obj = {length: num}
+
+                let arr1 = Array.from(obj)
+                arr1.forEach(function(item, index, arr1) {
+                    arr1[index] = Array.from(obj)
+                    arr1[index].forEach(function (item2, index2, arr2) {
+                        arr1[index][index2] = {
+                            has: false,
+                        }
+                    })
+                })
+                
+                return arr1
+            }
+
+
+            //点击， 判断落子点坐标
+            function click() {
+                canvas.addEventListener('click', function (e) {
+                    let left = e.offsetX - 35
+                    let top = e.offsetY - 35
+                    let x = Math.floor(left / 50)
+                    let y = Math.floor(top / 50)
+
+                    if (x < 0 || x > 14 || y < 0 || y > 14) return
+                    else {
+                        //判断数组的落子状况，has则点击失效
+                        let obj = arr[x][y]
+                        if (obj.has) return
+                        //成功落子，触发相关事件
+                        else {
+                            let player = flag
+                            drawPiece(x, y)
+                            getState(x, y, player)
+                            WinJudge(x, y, player)
+                            winEvent(player)
+                        }
+                    }
+                })
+            }
+
+
+            //画棋子函数
+            function drawPiece(x, y) {
+                    let xCoord = 60 + x * 50
+                    let yCoord = 60 + y * 50
+                    let radius = 25
+                    let gradient = ctx.createRadialGradient(xCoord, yCoord, radius, xCoord, yCoord, radius / 6)
+                    if (flag) {
+                        gradient.addColorStop(0, '#636766')
+                        gradient.addColorStop(1, '#a0a0a0')
+                    }
+                    else {
+                        gradient.addColorStop(0, '#d1d1d1')
+                        gradient.addColorStop(1, '#f9f9f9')
+                    }
+                    flag = !flag        
+                    ctx.beginPath()
+                    ctx.arc(xCoord, yCoord, radius, 0, Math.PI * 2, true)
+                    ctx.fillStyle = gradient
+                    ctx.fill()
+                }
+
+
+            //给数组加状态has: true
+            function getState(x, y, player) {
+                arr[x][y] = {
+                    has: true,
+                    flag: player
+                }
+            }
+
+
+            //判断胜负的封装
+            function WinJudge(x, y, player) {
+                skewWin(x, y, player, 1)
+                skewWin(x, y, player, 2)
+                skewWin(x, y, player, 3)
+                skewWin(x, y, player, 4)
+            }
+
+            
+            // 处理斜向坐标
+            function handleSkewList(list, player) {
+                let listNum = list.map((item, index) => {
+                    let x = item[0],
+                        y = item[1]
+                    if (x < 0 || x > 14 || y < 0 || y > 14) return false
+                    else {
+                        return arr[x][y].flag === player
+                    }
+                })
+                let num = 1
+                listNum.reduce((prev, cur, index) => {
+                    if (prev === cur) {
+                        num += 1
+                        if (num >= 5) {
+                            winFlag = true
+                        }
+                    }
+                    else {
+                        num = 1
+                    }
+                    return cur
+                })
+            }
+
+
+
+            //斜向判断胜负
+            function skewWin(x, y, player, type) {
+                function newList(x, y) {
+                    let obj = {length: 9}
+                    let arr = Array.from(obj)
+                    arr.forEach((item, index) => {
+                        if (type === 1) {
+                            arr[index] = [x - 4 + index, y - 4 + index]
+                        }
+                        else if (type === 2) {
+                            arr[index] = [x - 4 + index, y + 4 - index]
+                        }
+                        else if (type === 3) {
+                            arr[index] = [x - 4 + index, y]
+                        }
+                        else {
+                            arr[index] = [x, y - 4 + index]
+                        }
+                    })
+                    return arr
+                }
+                if (winFlag) return
+                else {
+                    let list = newList(x, y)
+                    handleSkewList(list, player)
+                }
+            }
+
+
+
+            //获胜后的事件
+            function winEvent(player) {
+                if (winFlag) {
+                    if (player) {
+                        alert('黑棋获胜！再来一句把！')
+                    }
+                    else {
+                        alert('白棋获胜！再来一句把！')
+                    }
+                    location.reload()
+                    
+                }
+            }
+            //背景线
+            drawLine()
+            //点击，注册事件
+            click()
+        }
+
+        __main()
+    </script>
+</body>
+</html>
